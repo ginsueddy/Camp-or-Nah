@@ -4,4 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/latitude_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="63dp"
+        android:layout_marginStart="35dp"
+        android:text="Latittude Coordinate" />
+
+    <TextView
+        android:id="@+id/longitude_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/latitude_text_view"
+        android:layout_alignBottom="@+id/latitude_text_view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp"
+        android:text="Longitude Coordinate" />
+
 </RelativeLayout>

@@ -40,8 +40,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final float DEFAULT_ZOOM = 15f;
 
     private boolean mLocationPermissionGranted = false;
+    private boolean gotDeviceLocation = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Location currentLocation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         getLocationPermission();
-        if(mLocationPermissionGranted){
-            addLocationInfo();
+
+        if(gotDeviceLocation){
         }
     }
 
@@ -143,10 +145,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location");
-                            Location currentLocation = (Location) task.getResult();
+                            currentLocation = (Location) task.getResult();
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM);
+
+                            gotDeviceLocation = true;
+
+                            addLocationInfo(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
 
                         }
                         else{
@@ -169,13 +175,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    private void addLocationInfo(){
+    private void addLocationInfo(final LatLng latLng){
         ImageButton mAddLocation = (ImageButton) findViewById(R.id.ic_add_location_button);
         mAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MapActivity.this, "test success", Toast.LENGTH_SHORT).show();
                 Intent intentToMarker = new Intent(MapActivity.this, MarkerActivity.class);
+                Bundle extras = new Bundle();
+                extras.putDouble("EXTRA_LATITUDE", latLng.latitude);
+                extras.putDouble("EXTRA_LONGITUDE", latLng.longitude);
+                intentToMarker.putExtras(extras);
                 startActivity(intentToMarker);
             }
         });
