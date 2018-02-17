@@ -25,6 +25,8 @@ public class MarkerActivity extends AppCompatActivity {
     private TextView mLongitudeTextView;
     private ImageButton mFinishImageButton;
 
+    private boolean doneButtonPressed = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,26 +51,40 @@ public class MarkerActivity extends AppCompatActivity {
         mLatitudeTextView.setText("Latitude: " + latitude);
         mLongitudeTextView.setText("Longitude: " + longitude);
         completeMarker();
-        //set hella if statements for completeMarker*/
     }
 
     private void completeMarker(){
         mFinishImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClickNameEdit: " + mNameEditText.getText().toString());
-                Log.d(TAG, "onClickDescriptionEdit: " + mDescriptionEditText.getText().toString());
-                finish();
+                if(!mNameEditText.getText().toString().isEmpty() && !mDescriptionEditText.getText().toString().isEmpty()){
+                    doneButtonPressed = true;
+                    finish();
+                }
+                else if(mNameEditText.getText().toString().isEmpty() && mDescriptionEditText.getText().toString().isEmpty()){
+                    Toast.makeText(MarkerActivity.this,"Both fields are empty", Toast.LENGTH_SHORT).show();
+                }
+                else if(mNameEditText.getText().toString().isEmpty()){
+                    Toast.makeText(MarkerActivity.this, "Name field is empty", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MarkerActivity.this, "Description field is empty", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     @Override
     public void finish() {
-        Intent intentToMapActivity = new Intent();
-        intentToMapActivity.putExtra("EXTRA_NAME", mNameEditText.getText().toString());
-        intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mNameEditText.getText().toString());
-        setResult(RESULT_OK, intentToMapActivity);
-        super.finish();
+        if(doneButtonPressed){
+            Intent intentToMapActivity = new Intent();
+            intentToMapActivity.putExtra("EXTRA_NAME", mNameEditText.getText().toString());
+            intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mNameEditText.getText().toString());
+            setResult(RESULT_OK, intentToMapActivity);
+            super.finish();
+        }
+        else{
+            super.finish();
+        }
     }
 }
