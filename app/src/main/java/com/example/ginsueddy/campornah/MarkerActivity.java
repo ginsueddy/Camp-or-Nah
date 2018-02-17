@@ -43,24 +43,32 @@ public class MarkerActivity extends AppCompatActivity {
         double longitude = 0;
         if(intentPackage != null){
             latitude = intentPackageExtras.getDouble("EXTRA_LATITUDE");
+            longitude = intentPackageExtras.getDouble("EXTRA_LONGITUDE");
         }
 
-        Log.d(TAG, "onCreate: mylatitude " + latitude);
-
-        mLatitudeTextView.setText((int) latitude);
-        mLongitudeTextView.setText((int) longitude);
-        //set hella if statements for completeMarker
+        mLatitudeTextView.setText("Latitude: " + latitude);
+        mLongitudeTextView.setText("Longitude: " + longitude);
+        completeMarker();
+        //set hella if statements for completeMarker*/
     }
 
     private void completeMarker(){
         mFinishImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentToMapActivity = new Intent();
-                Bundle intentToMapActivityExtras = new Bundle();
-                //extras.put()
+                Log.d(TAG, "onClickNameEdit: " + mNameEditText.getText().toString());
+                Log.d(TAG, "onClickDescriptionEdit: " + mDescriptionEditText.getText().toString());
+                finish();
             }
         });
     }
 
+    @Override
+    public void finish() {
+        Intent intentToMapActivity = new Intent();
+        intentToMapActivity.putExtra("EXTRA_NAME", mNameEditText.getText().toString());
+        intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mNameEditText.getText().toString());
+        setResult(RESULT_OK, intentToMapActivity);
+        super.finish();
+    }
 }

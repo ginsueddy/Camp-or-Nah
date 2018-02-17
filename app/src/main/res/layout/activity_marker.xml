@@ -44,19 +44,18 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/latitude_text_view"
         android:layout_alignBottom="@+id/latitude_text_view"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="35dp"
+        android:layout_alignEnd="@+id/ic_finish_task_image_button"
         android:text="Longitude Coordinate" />
-
 
 
     <ImageButton
         android:id="@+id/ic_finish_task_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/longitude_text_view"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="41dp"
+        android:layout_marginEnd="36dp"
         app:srcCompat="@drawable/ic_finish_task" />
 
 </RelativeLayout>

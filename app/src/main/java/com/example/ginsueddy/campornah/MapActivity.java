@@ -51,9 +51,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         getLocationPermission();
-
-        if(gotDeviceLocation){
-        }
     }
 
     private void getLocationPermission() {
@@ -186,10 +183,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 extras.putDouble("EXTRA_LATITUDE", latLng.latitude);
                 extras.putDouble("EXTRA_LONGITUDE", latLng.longitude);
                 intentToMarker.putExtras(extras);
-                startActivity(intentToMarker);
+                //Toast.makeText(MapActivity.this, "Latitude" + latLng.latitude, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapActivity.this, "Latitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+
+                startActivityForResult(intentToMarker,101);
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: I got into the method");
+        if(requestCode == 101 && resultCode == RESULT_OK){
+            Log.d(TAG, "onActivityResult: I passed the first test");
+            if(data.hasExtra("EXTRA_NAME")){
+                Log.d(TAG, "onActivityResult: I passed all the tests");
+                Toast.makeText(this, data.getExtras().getString("EXTRA_NAME"), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
