@@ -56,9 +56,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void getLocationPermission() {
-        Log.d(TAG, "onMapReady: I am getLocationPermission first");
-
-        Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
@@ -79,7 +76,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: called");
         mLocationPermissionGranted = false;
 
         switch (requestCode){
@@ -88,11 +84,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     for (int i = 0; i < grantResults.length; i++){
                         if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
                             mLocationPermissionGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
                             return;
                         }
                     }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
                     mLocationPermissionGranted = true;
                     initMap();
                 }
@@ -101,7 +95,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void initMap() {
-        Log.d(TAG, "initMap: initalizing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(MapActivity.this);
@@ -109,10 +102,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady: I am onMapReady first");
-
         Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onMapReady: Map is ready here");
         mMap = googleMap;
 
         if (mLocationPermissionGranted) {
@@ -128,11 +118,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void getDeviceLocation() {
-        Log.d(TAG, "onMapReady: I am getDeviceLocation first");
-
-
-        Log.d(TAG, "getDeviceLocation: getting the device's current location");
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
@@ -143,7 +128,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
-                            Log.d(TAG, "onComplete: found location");
                             mCurrentLocation = (Location) task.getResult();
 
                             moveCamera(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
@@ -155,7 +139,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         }
                         else{
-                            Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -167,9 +150,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void moveCamera(LatLng latLng, float zoom){
-        Log.d(TAG, "onMapReady: I am moveCamera first");
-
-        Log.d(TAG, "moveCamera: moving the camera to lat: " + latLng.latitude + ", lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
@@ -196,11 +176,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: I got into the method");
         if(requestCode == 101 && resultCode == RESULT_OK){
-            Log.d(TAG, "onActivityResult: I passed the first test");
             if(data.hasExtra("EXTRA_NAME")){
-                Log.d(TAG, "onActivityResult: I passed all the tests");
                 Toast.makeText(this, data.getExtras().getString("EXTRA_NAME"), Toast.LENGTH_SHORT).show();
                 mMap.addMarker(new MarkerOptions().position(mLatLng).title(data.getExtras().getString("EXTRA_NAME")));
             }
