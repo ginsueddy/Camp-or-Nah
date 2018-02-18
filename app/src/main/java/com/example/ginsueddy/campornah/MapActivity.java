@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -43,7 +44,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean gotDeviceLocation = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Location currentLocation;
+    private Location mCurrentLocation;
+    private LatLng mLatLng;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,14 +144,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location");
-                            currentLocation = (Location) task.getResult();
+                            mCurrentLocation = (Location) task.getResult();
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                            moveCamera(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
                                     DEFAULT_ZOOM);
 
                             gotDeviceLocation = true;
 
-                            addLocationInfo(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            addLocationInfo();
 
                         }
                         else{
@@ -172,19 +174,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    private void addLocationInfo(final LatLng latLng){
+    private void addLocationInfo(){
         ImageButton mAddLocation = (ImageButton) findViewById(R.id.ic_add_location_button);
         mAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                 Toast.makeText(MapActivity.this, "test success", Toast.LENGTH_SHORT).show();
                 Intent intentToMarker = new Intent(MapActivity.this, MarkerActivity.class);
                 Bundle extras = new Bundle();
-                extras.putDouble("EXTRA_LATITUDE", latLng.latitude);
-                extras.putDouble("EXTRA_LONGITUDE", latLng.longitude);
+                extras.putDouble("EXTRA_LATITUDE", mLatLng.latitude);
+                extras.putDouble("EXTRA_LONGITUDE", mLatLng.longitude);
                 intentToMarker.putExtras(extras);
-                //Toast.makeText(MapActivity.this, "Latitude" + latLng.latitude, Toast.LENGTH_SHORT).show();
-                //Toast.makeText(MapActivity.this, "Latitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
 
                 startActivityForResult(intentToMarker,101);
             }
@@ -201,6 +202,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if(data.hasExtra("EXTRA_NAME")){
                 Log.d(TAG, "onActivityResult: I passed all the tests");
                 Toast.makeText(this, data.getExtras().getString("EXTRA_NAME"), Toast.LENGTH_SHORT).show();
+                mMap.addMarker(new MarkerOptions().position(mLatLng).title(data.getExtras().getString("EXTRA_NAME")));
             }
         }
     }
