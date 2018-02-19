@@ -32,10 +32,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MapActivity"
             android:parentActivityName=".MainActivity"/>
+
         <activity android:name=".MarkerActivity"
             android:parentActivityName=".MapActivity"/>
+
+        <activity android:name=".CampSpotListActivity"/>
     </application>
 
 </manifest>

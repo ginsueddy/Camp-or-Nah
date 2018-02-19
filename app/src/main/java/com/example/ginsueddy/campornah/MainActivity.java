@@ -26,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
         if(isServicesOK()){
             init();
         }
+
+        Button btnMyCampSites = (Button) findViewById(R.id.btnMyCampSpots);
+
+        btnMyCampSites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentToCampSpotList = new Intent(MainActivity.this, CampSpotListActivity.class);
+                startActivity(intentToCampSpotList);
+            }
+        });
     }
 
     private void init(){
