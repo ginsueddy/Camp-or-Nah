@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             init();
         }
 
-        Button btnMyCampSites = (Button) findViewById(R.id.btnMyCampSpots);
+        Button btnMyCampSites = (Button) findViewById(R.id.btn_my_camp_spots);
 
         btnMyCampSites.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
-        Button btnMap = (Button) findViewById(R.id.btnMap);
+        Button btnMap = (Button) findViewById(R.id.btn_map);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

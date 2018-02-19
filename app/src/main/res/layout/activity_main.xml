@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btnMap"
+        android:id="@+id/btn_map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <Button
-        android:id="@+id/btnMyCampSpots"
+        android:id="@+id/btn_my_camp_spots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
