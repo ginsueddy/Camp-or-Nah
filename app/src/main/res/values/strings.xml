@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Camp or Nah</string>
     <string name="google_maps_api_key">AIzaSyBtjiW-NZaweI25NasnASq-YaNqCxbEa-M</string>
+    <string name="error_message">You have no saved camp spots. Go outside and explore!</string>
 </resources>
