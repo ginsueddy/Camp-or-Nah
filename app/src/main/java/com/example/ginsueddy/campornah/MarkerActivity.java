@@ -26,6 +26,8 @@ public class MarkerActivity extends AppCompatActivity {
     private ImageButton mFinishImageButton;
 
     private boolean doneButtonPressed = false;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,8 +43,6 @@ public class MarkerActivity extends AppCompatActivity {
 
         Intent intentPackage = getIntent();
         Bundle intentPackageExtras = intentPackage.getExtras();
-        double latitude = 0;
-        double longitude = 0;
         if(intentPackage != null){
             latitude = intentPackageExtras.getDouble("EXTRA_LATITUDE");
             longitude = intentPackageExtras.getDouble("EXTRA_LONGITUDE");
@@ -80,6 +80,8 @@ public class MarkerActivity extends AppCompatActivity {
             Intent intentToMapActivity = new Intent();
             intentToMapActivity.putExtra("EXTRA_NAME", mNameEditText.getText().toString());
             intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mNameEditText.getText().toString());
+            intentToMapActivity.putExtra("EXTRA_LATITUDE", latitude);
+            intentToMapActivity.putExtra("EXTRA_LONGITUDE", longitude);
             setResult(RESULT_OK, intentToMapActivity);
             super.finish();
         }

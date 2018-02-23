@@ -25,6 +25,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+
+import java.util.LinkedList;
 
 
 /**
@@ -46,6 +49,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location mCurrentLocation;
     private LatLng mLatLng;
+
+    private LinkedList<CampSpot> campSpots = new LinkedList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -177,10 +182,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 101 && resultCode == RESULT_OK){
-            if(data.hasExtra("EXTRA_NAME")){
+            if(data.hasExtra("EXTRA_NAME") && data.hasExtra("EXTRA_DESCRIPTION") &&
+                    data.hasExtra("EXTRA_LATITUDE") && data.hasExtra("EXTRA_LONGITUDE")){
                 Toast.makeText(this, data.getExtras().getString("EXTRA_NAME"), Toast.LENGTH_SHORT).show();
                 mMap.addMarker(new MarkerOptions().position(mLatLng).title(data.getExtras().getString("EXTRA_NAME")));
+
+                CampSpot campSpot = new CampSpot(data.getExtras().getString("EXTRA_NAME"),
+                        data.getExtras().getString("EXTRA_DESCRIPTION"),
+                        data.getExtras().getDouble("EXTRA_LATITUDE"),
+                        data.getExtras().getDouble("EXTRA_LONGITUDE"));
+
+                serializeCampSpots(campSpot);
             }
         }
+    }
+
+    private void serializeCampSpots(CampSpot campSpot){
+        campSpots.add(campSpot);
+
+        Gson gson = new Gson();
+        String campSpotJson = gson.toJson(campSpots);
+        saveCampSpotJsonToInternalStorage(campSpotJson);
+    }
+
+    private void saveCampSpotJsonToInternalStorage(String campSpotJson){
+        //FileOutputStream fileOutputStream = openFileOutput("my_camp_spots_file.txt", )
     }
 }
