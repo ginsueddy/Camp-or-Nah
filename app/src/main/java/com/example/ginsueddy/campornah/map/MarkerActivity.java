@@ -1,15 +1,16 @@
-package com.example.ginsueddy.campornah;
+package com.example.ginsueddy.campornah.map;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.ginsueddy.campornah.R;
 
 /**
  * Created by ginsueddy on 1/30/18.

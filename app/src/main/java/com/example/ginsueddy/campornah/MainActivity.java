@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.ginsueddy.campornah.camp.spot.list.CampSpotListActivity;
+import com.example.ginsueddy.campornah.map.MapActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 

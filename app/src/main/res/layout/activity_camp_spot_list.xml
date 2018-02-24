@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/my_camp_spot_list"
+        android:id="@+id/my_camp_spot_list_text_view"
         android:layout_width="wrap_content"
         style="@style/TextAppearance.AppCompat.Large"
         android:layout_height="wrap_content"
