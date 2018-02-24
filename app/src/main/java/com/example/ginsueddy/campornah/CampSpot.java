@@ -16,5 +16,9 @@ public class CampSpot {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public String getName() {
+        return name;
+    }
 }
 

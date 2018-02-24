@@ -26,7 +26,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 
 
@@ -56,6 +64,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        if(loadCampSpotJsonFromInternalStorage() != null){
+            deserializeCampSpots(loadCampSpotJsonFromInternalStorage());
+        }
 
         getLocationPermission();
     }
@@ -206,6 +218,47 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void saveCampSpotJsonToInternalStorage(String campSpotJson){
-        //FileOutputStream fileOutputStream = openFileOutput("my_camp_spots_file.txt", )
+        String fileName = getResources().getString(R.string.saved_camp_sites_file);
+        try {
+            FileOutputStream fileOutputStream = openFileOutput(fileName, MODE_PRIVATE);
+            fileOutputStream.write(campSpotJson.getBytes());
+            Log.d(TAG, "saveCampSpotJsonToInternalStorage: Camp spots saved to " + getFilesDir() + "/" + fileName);
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String loadCampSpotJsonFromInternalStorage() {
+        try {
+            FileInputStream fileInputStream = openFileInput(getResources().getString(R.string.saved_camp_sites_file));
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder stringBuilder = new StringBuilder();
+            String jsonString;
+
+            while((jsonString = bufferedReader.readLine())!= null){
+                stringBuilder.append(jsonString);
+            }
+
+            fileInputStream.close();
+            return stringBuilder.toString();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void deserializeCampSpots(String jsonString){
+        Log.d(TAG, "deserializeCampSpots: " + jsonString);
+
+        Type campSpotListType = new TypeToken<LinkedList<CampSpot>>(){}.getType();
+
+        campSpots = new Gson().fromJson(jsonString, campSpotListType);
     }
 }
