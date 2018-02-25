@@ -1,15 +1,16 @@
-package com.example.ginsueddy.campornah;
+package com.example.ginsueddy.campornah.map;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.ginsueddy.campornah.R;
 
 /**
  * Created by ginsueddy on 1/30/18.
@@ -26,12 +27,13 @@ public class MarkerActivity extends AppCompatActivity {
     private ImageButton mFinishImageButton;
 
     private boolean doneButtonPressed = false;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker);
-        Toast.makeText(this, "Intent success", Toast.LENGTH_SHORT).show();
 
         mNameEditText = (EditText) findViewById(R.id.name_edit_text);
         mDescriptionEditText = (EditText) findViewById(R.id.description_edit_text);
@@ -41,8 +43,6 @@ public class MarkerActivity extends AppCompatActivity {
 
         Intent intentPackage = getIntent();
         Bundle intentPackageExtras = intentPackage.getExtras();
-        double latitude = 0;
-        double longitude = 0;
         if(intentPackage != null){
             latitude = intentPackageExtras.getDouble("EXTRA_LATITUDE");
             longitude = intentPackageExtras.getDouble("EXTRA_LONGITUDE");
@@ -79,7 +79,9 @@ public class MarkerActivity extends AppCompatActivity {
         if(doneButtonPressed){
             Intent intentToMapActivity = new Intent();
             intentToMapActivity.putExtra("EXTRA_NAME", mNameEditText.getText().toString());
-            intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mNameEditText.getText().toString());
+            intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mDescriptionEditText.getText().toString());
+            intentToMapActivity.putExtra("EXTRA_LATITUDE", latitude);
+            intentToMapActivity.putExtra("EXTRA_LONGITUDE", longitude);
             setResult(RESULT_OK, intentToMapActivity);
             super.finish();
         }

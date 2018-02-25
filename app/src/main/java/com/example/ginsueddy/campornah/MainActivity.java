@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.ginsueddy.campornah.camp.spot.list.CampSpotListActivity;
+import com.example.ginsueddy.campornah.map.MapActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -26,10 +28,20 @@ public class MainActivity extends AppCompatActivity {
         if(isServicesOK()){
             init();
         }
+
+        Button btnMyCampSites = (Button) findViewById(R.id.btn_my_camp_spots);
+
+        btnMyCampSites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentToCampSpotList = new Intent(MainActivity.this, CampSpotListActivity.class);
+                startActivity(intentToCampSpotList);
+            }
+        });
     }
 
     private void init(){
-        Button btnMap = (Button) findViewById(R.id.btnMap);
+        Button btnMap = (Button) findViewById(R.id.btn_map);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

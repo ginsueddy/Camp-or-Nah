@@ -1,4 +1,4 @@
-package com.example.ginsueddy.campornah;
+package com.example.ginsueddy.campornah.map;
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.ginsueddy.campornah.CampSpot;
+import com.example.ginsueddy.campornah.InternalStorageIO;
+import com.example.ginsueddy.campornah.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +28,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.LinkedList;
 
 
 /**
@@ -47,10 +52,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Location mCurrentLocation;
     private LatLng mLatLng;
 
+    private LinkedList<CampSpot> campSpots = new LinkedList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        if(InternalStorageIO.loadCampSpotJsonFromInternalStorage(this.getApplicationContext()) != null){
+            campSpots = InternalStorageIO.deserializeCampSpotsLinkedList(InternalStorageIO.loadCampSpotJsonFromInternalStorage(this.getApplicationContext()));
+        }
 
         getLocationPermission();
     }
@@ -160,7 +171,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                Toast.makeText(MapActivity.this, "test success", Toast.LENGTH_SHORT).show();
                 Intent intentToMarker = new Intent(MapActivity.this, MarkerActivity.class);
                 Bundle extras = new Bundle();
                 extras.putDouble("EXTRA_LATITUDE", mLatLng.latitude);
@@ -177,9 +187,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 101 && resultCode == RESULT_OK){
-            if(data.hasExtra("EXTRA_NAME")){
+            if(data.hasExtra("EXTRA_NAME") && data.hasExtra("EXTRA_DESCRIPTION") &&
+                    data.hasExtra("EXTRA_LATITUDE") && data.hasExtra("EXTRA_LONGITUDE")){
                 Toast.makeText(this, data.getExtras().getString("EXTRA_NAME"), Toast.LENGTH_SHORT).show();
                 mMap.addMarker(new MarkerOptions().position(mLatLng).title(data.getExtras().getString("EXTRA_NAME")));
+
+                CampSpot campSpot = new CampSpot(data.getExtras().getString("EXTRA_NAME"),
+                        data.getExtras().getString("EXTRA_DESCRIPTION"),
+                        data.getExtras().getDouble("EXTRA_LATITUDE"),
+                        data.getExtras().getDouble("EXTRA_LONGITUDE"));
+
+                campSpots.add(campSpot);
+                InternalStorageIO.serializeCampSpots(campSpots, this.getApplicationContext());
             }
         }
     }
