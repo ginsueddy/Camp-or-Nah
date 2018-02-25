@@ -39,7 +39,8 @@
         <activity android:name=".map.MarkerActivity"
             android:parentActivityName=".map.MapActivity"/>
 
-        <activity android:name=".camp.spot.list.CampSpotListActivity"/>
+        <activity android:name=".camp.spot.list.CampSpotListActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.example.ginsueddy.campornah.CampSpot;
 import com.example.ginsueddy.campornah.R;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
@@ -23,6 +21,14 @@ public class CampSpotAdapter extends RecyclerView.Adapter<CampSpotAdapter.CampSp
     private ArrayList<CampSpot> campSpots;
 
     private final CampSpotAdapterOnClickHandler mClickHandler;
+
+    public interface CampSpotAdapterOnClickHandler {
+        void onClick(String singleCampSpotData);
+    }
+
+    public CampSpotAdapter(CampSpotAdapterOnClickHandler campSpotAdapterOnClickHandler){
+        mClickHandler = campSpotAdapterOnClickHandler;
+    }
 
     @Override
     public CampSpotAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -52,12 +58,9 @@ public class CampSpotAdapter extends RecyclerView.Adapter<CampSpotAdapter.CampSp
         }
     }
 
-    public interface CampSpotAdapterOnClickHandler {
-        void onClick(String singleCampSpotData);
-    }
-
-    public CampSpotAdapter(CampSpotAdapterOnClickHandler campSpotAdapterOnClickHandler){
-        mClickHandler = campSpotAdapterOnClickHandler;
+    public void setCampSpots (ArrayList<CampSpot> campSpots){
+        this.campSpots = campSpots;
+        notifyDataSetChanged();
     }
 
 
@@ -75,7 +78,7 @@ public class CampSpotAdapter extends RecyclerView.Adapter<CampSpotAdapter.CampSp
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             String singleCampSpotData = campSpots.get(adapterPosition).getName();
-
+            mClickHandler.onClick(singleCampSpotData);
         }
     }
 }
