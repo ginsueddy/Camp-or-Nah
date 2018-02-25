@@ -171,7 +171,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                Toast.makeText(MapActivity.this, "test success", Toast.LENGTH_SHORT).show();
                 Intent intentToMarker = new Intent(MapActivity.this, MarkerActivity.class);
                 Bundle extras = new Bundle();
                 extras.putDouble("EXTRA_LATITUDE", mLatLng.latitude);

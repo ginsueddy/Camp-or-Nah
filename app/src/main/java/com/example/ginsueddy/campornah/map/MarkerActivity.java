@@ -34,7 +34,6 @@ public class MarkerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marker);
-        Toast.makeText(this, "Intent success", Toast.LENGTH_SHORT).show();
 
         mNameEditText = (EditText) findViewById(R.id.name_edit_text);
         mDescriptionEditText = (EditText) findViewById(R.id.description_edit_text);
@@ -80,7 +79,7 @@ public class MarkerActivity extends AppCompatActivity {
         if(doneButtonPressed){
             Intent intentToMapActivity = new Intent();
             intentToMapActivity.putExtra("EXTRA_NAME", mNameEditText.getText().toString());
-            intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mNameEditText.getText().toString());
+            intentToMapActivity.putExtra("EXTRA_DESCRIPTION", mDescriptionEditText.getText().toString());
             intentToMapActivity.putExtra("EXTRA_LATITUDE", latitude);
             intentToMapActivity.putExtra("EXTRA_LONGITUDE", longitude);
             setResult(RESULT_OK, intentToMapActivity);
