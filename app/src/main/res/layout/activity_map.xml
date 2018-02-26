@@ -14,15 +14,15 @@
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
     <ImageButton
+        android:id="@+id/ic_add_location_button"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="19dp"
+        android:layout_marginStart="11dp"
+        android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:id="@+id/ic_add_location_button"
-        android:src="@drawable/ic_add_location"
-        android:background="@android:color/transparent"/>
+        android:src="@drawable/ic_add_location" />
 
 </RelativeLayout>
