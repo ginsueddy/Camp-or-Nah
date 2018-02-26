@@ -17,7 +17,6 @@ import com.example.ginsueddy.campornah.InternalStorageIO;
 import com.example.ginsueddy.campornah.R;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Created by ginsueddy on 2/18/18.
@@ -92,7 +91,7 @@ public class CampSpotListActivity extends AppCompatActivity implements CampSpotA
         @Override
         protected void onPostExecute(ArrayList<CampSpot> campSpots) {
             loadingIndicator.setVisibility(View.INVISIBLE);
-            if(campSpots != null){
+            if(campSpots.size() != 0){
                 showCampSpotList();
                 campSpotAdapter.setCampSpots(campSpots);
             }
