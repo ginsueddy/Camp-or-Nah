@@ -70,8 +70,11 @@ public class CampSpotListActivity extends AppCompatActivity implements CampSpotA
     }
 
     @Override
-    public void onClick(String singleCampSpotData) {
-
+    public void onClick(String singleCampSpotDes, int campSpotIndex) {
+        Intent intentToDetailActivity = new Intent(this, CampSpotDetailActivity.class);
+        intentToDetailActivity.putExtra("EXTRA_CAMP_SPOT_DES", singleCampSpotDes);
+        intentToDetailActivity.putExtra("EXTRA_CAMP_SPOT_INDEX", campSpotIndex);
+        startActivity(intentToDetailActivity);
     }
 
     public class FetchCampSpots extends AsyncTask<String, Void, ArrayList<CampSpot>> {

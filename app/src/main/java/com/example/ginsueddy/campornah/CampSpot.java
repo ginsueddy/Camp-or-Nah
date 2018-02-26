@@ -20,5 +20,9 @@ public class CampSpot {
     public String getName() {
         return name;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }
 

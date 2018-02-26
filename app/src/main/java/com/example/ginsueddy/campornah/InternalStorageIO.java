@@ -25,7 +25,12 @@ public final class InternalStorageIO {
 
     private static final String TAG = "InternalStorageIOClass";
 
-    public static void serializeCampSpots(LinkedList<CampSpot> campSpots, Context ctx){
+    public static void serializeCampSpotsLinkedList(LinkedList<CampSpot> campSpots, Context ctx){
+        Gson gson = new Gson();
+        String campSpotJson = gson.toJson(campSpots);
+        saveCampSpotJsonToInternalStorage(campSpotJson, ctx);
+    }
+    public static void serializeCampSpotsArrayList(ArrayList<CampSpot> campSpots, Context ctx){
         Gson gson = new Gson();
         String campSpotJson = gson.toJson(campSpots);
         saveCampSpotJsonToInternalStorage(campSpotJson, ctx);

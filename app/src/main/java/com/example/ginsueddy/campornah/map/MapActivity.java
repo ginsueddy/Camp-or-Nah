@@ -198,7 +198,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         data.getExtras().getDouble("EXTRA_LONGITUDE"));
 
                 campSpots.add(campSpot);
-                InternalStorageIO.serializeCampSpots(campSpots, this.getApplicationContext());
+                InternalStorageIO.serializeCampSpotsLinkedList(campSpots, this.getApplicationContext());
             }
         }
     }
