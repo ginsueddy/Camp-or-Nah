@@ -24,5 +24,13 @@ public class CampSpot {
     public String getDescription() {
         return description;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 }
 

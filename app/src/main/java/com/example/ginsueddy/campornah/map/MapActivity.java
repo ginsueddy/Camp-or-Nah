@@ -115,6 +115,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
         mMap = googleMap;
+        displayMarkers();
 
         if (mLocationPermissionGranted) {
             getDeviceLocation();
@@ -125,6 +126,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 return;
             }
             mMap.setMyLocationEnabled(true);
+        }
+    }
+
+    private void displayMarkers(){
+        for (CampSpot campSpot:
+             campSpots) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(campSpot.getLatitude(), campSpot.getLongitude())).title(campSpot.getName()));
         }
     }
 
