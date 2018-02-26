@@ -1,5 +1,6 @@
 package com.example.ginsueddy.campornah.camp.spot.list;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
