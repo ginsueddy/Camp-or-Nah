@@ -41,6 +41,9 @@
 
         <activity android:name=".camp.spot.list.CampSpotListActivity"
             android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".camp.spot.list.CampSpotDetailActivity"
+            android:parentActivityName=".camp.spot.list.CampSpotListActivity"/>
     </application>
 
 </manifest>

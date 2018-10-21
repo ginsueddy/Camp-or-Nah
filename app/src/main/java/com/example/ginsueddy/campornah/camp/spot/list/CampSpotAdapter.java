@@ -23,7 +23,7 @@ public class CampSpotAdapter extends RecyclerView.Adapter<CampSpotAdapter.CampSp
     private final CampSpotAdapterOnClickHandler mClickHandler;
 
     public interface CampSpotAdapterOnClickHandler {
-        void onClick(String singleCampSpotData);
+        void onClick(String singleCampSpotDes, int campSpotIndex);
     }
 
     public CampSpotAdapter(CampSpotAdapterOnClickHandler campSpotAdapterOnClickHandler){
@@ -77,8 +77,8 @@ public class CampSpotAdapter extends RecyclerView.Adapter<CampSpotAdapter.CampSp
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            String singleCampSpotData = campSpots.get(adapterPosition).getName();
-            mClickHandler.onClick(singleCampSpotData);
+            String singleCampSpotDes = campSpots.get(adapterPosition).getDescription();
+            mClickHandler.onClick(singleCampSpotDes, adapterPosition);
         }
     }
 }

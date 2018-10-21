@@ -1,5 +1,6 @@
 package com.example.ginsueddy.campornah.camp.spot.list;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +17,6 @@ import com.example.ginsueddy.campornah.InternalStorageIO;
 import com.example.ginsueddy.campornah.R;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Created by ginsueddy on 2/18/18.
@@ -69,8 +69,11 @@ public class CampSpotListActivity extends AppCompatActivity implements CampSpotA
     }
 
     @Override
-    public void onClick(String singleCampSpotData) {
-
+    public void onClick(String singleCampSpotDes, int campSpotIndex) {
+        Intent intentToDetailActivity = new Intent(this, CampSpotDetailActivity.class);
+        intentToDetailActivity.putExtra("EXTRA_CAMP_SPOT_DES", singleCampSpotDes);
+        intentToDetailActivity.putExtra("EXTRA_CAMP_SPOT_INDEX", campSpotIndex);
+        startActivity(intentToDetailActivity);
     }
 
     public class FetchCampSpots extends AsyncTask<String, Void, ArrayList<CampSpot>> {
@@ -88,7 +91,7 @@ public class CampSpotListActivity extends AppCompatActivity implements CampSpotA
         @Override
         protected void onPostExecute(ArrayList<CampSpot> campSpots) {
             loadingIndicator.setVisibility(View.INVISIBLE);
-            if(campSpots != null){
+            if(campSpots.size() != 0){
                 showCampSpotList();
                 campSpotAdapter.setCampSpots(campSpots);
             }
